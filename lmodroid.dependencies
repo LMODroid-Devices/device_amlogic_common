@@ -1,17 +1,21 @@
 [
   {
+    "remote": "lineage",
     "repository": "android_device_amlogic_sepolicy",
     "target_path": "device/amlogic/sepolicy"
   },
   {
+    "remote": "lineage",
     "repository": "android_hardware_amlogic_tools_dtbtool",
     "target_path": "hardware/amlogic/tools/dtbtool"
   },
   {
+    "remote": "lineage",
     "repository": "android_hardware_amlogic_tools_imagepacker",
     "target_path": "hardware/amlogic/tools/imagepacker"
   },
   {
+    "remote": "lineage",
     "repository": "android_hardware_amlogic_tools_respacker",
     "target_path": "hardware/amlogic/tools/respacker"
   }
