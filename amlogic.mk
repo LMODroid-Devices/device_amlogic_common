@@ -1,11 +1,15 @@
 #
-# Copyright (C) 2022 The LineageOS Project
+# Copyright (C) 2022-2023 The LineageOS Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 ## AAPT
-PRODUCT_AAPT_PREF_CONFIG := tvdpi
+ifeq ($(PRODUCT_IS_ATV),true)
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
+else
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+endif
 
 ## Audio
 PRODUCT_COPY_FILES += \
@@ -38,12 +42,16 @@ PRODUCT_PACKAGES += \
     audio.bluetooth.default
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    atv.setup.bt_remote_pairing=true \
     ro.vendor.autoconnectbt.btclass=50c \
     ro.vendor.autoconnectbt.isneed=false \
     ro.vendor.autoconnectbt.macprefix=00:CD:FF \
     ro.vendor.autoconnectbt.nameprefix=Amlogic_RC \
     ro.vendor.autoconnectbt.rssilimit=70
+
+ifeq ($(PRODUCT_IS_ATV),true)
+PRODUCT_PROPERTY_OVERRIDES += \
+    atv.setup.bt_remote_pairing=true
+endif
 
 PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
@@ -55,7 +63,11 @@ TARGET_SCREEN_HEIGHT := 1080
 TARGET_SCREEN_WIDTH := 1920
 
 ## Characteristics
+ifeq ($(PRODUCT_IS_ATV),true)
 PRODUCT_CHARACTERISTICS := tv
+else
+PRODUCT_CHARACTERISTICS ?= tablet
+endif
 
 ## Codecs
 ifeq ($(PRODUCT_USE_SW_OMX),true)
@@ -83,11 +95,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.software
 
-## GMS
-ifeq ($(WITH_GMS),true)
-GMS_MAKEFILE=gms_minimal.mk
-endif
-
 ## Hardware Composer
 PRODUCT_PACKAGES += \
     libhwc2on1adapter \
@@ -102,9 +109,11 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 
 ## Light
+ifneq ($(TARGET_KERNEL_VERSION),5.4)
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
+endif
 
 ## Logo
 PRODUCT_HOST_PACKAGES += \
@@ -124,7 +133,14 @@ PRODUCT_COPY_FILES +=  \
 
 ## Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay
+    $(LOCAL_PATH)/overlay \
+    $(LOCAL_PATH)/overlay-lmodroid
+
+ifneq ($(PRODUCT_IS_ATV),true)
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-tab
+endif
+
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
 ## Permissions (Hardware)
@@ -133,6 +149,12 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.gamepad.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.gamepad.xml \
     frameworks/native/data/etc/android.hardware.location.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.xml \
     frameworks/native/data/etc/android.hardware.screen.landscape.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.landscape.xml
+
+ifneq ($(PRODUCT_IS_ATV),true)
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.screen.portrait.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.portrait.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.xml
+endif
 
 ## Permissions (Software)
 PRODUCT_COPY_FILES +=  \
