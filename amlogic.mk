@@ -109,18 +109,22 @@ PRODUCT_PACKAGES += \
     android.hardware.tv.cec@1.0-service
 
 ## Light
+ifneq ($(TARGET_KERNEL_VERSION),5.4)
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
+endif
 
 ## Logo
 PRODUCT_HOST_PACKAGES += \
     res_packer
 
 ## Memtrack
+ifneq ($(TARGET_KERNEL_VERSION),5.4)
 PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service
+endif
 
 ## NRDP (Netflix)
 PRODUCT_COPY_FILES +=  \
