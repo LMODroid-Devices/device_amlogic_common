@@ -94,8 +94,10 @@ PRODUCT_PACKAGES += \
     fs_config_files
 
 ## Gatekeeper
+ifeq ($(TARGET_HAS_TEE),false)
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.software
+endif
 
 ## Hardware Composer
 PRODUCT_PACKAGES += \
@@ -110,11 +112,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 
-## Light
-ifneq ($(TARGET_KERNEL_VERSION),5.4)
+## Keymaster
+ifeq ($(TARGET_HAS_TEE),false)
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service
+    android.hardware.keymaster@4.1-service
 endif
 
 ## Logo
@@ -169,6 +170,11 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.software.picture_in_picture.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.picture_in_picture.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml \
     frameworks/native/data/etc/android.software.voice_recognizers.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.voice_recognizers.xml
+
+ifneq ($(PRODUCT_IS_ATV),true)
+PRODUCT_COPY_FILES +=  \
+    frameworks/native/data/etc/android.software.secure_lock_screen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.secure_lock_screen.xml
+endif
 
 ## Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
