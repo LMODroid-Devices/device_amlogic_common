@@ -58,8 +58,10 @@ PRODUCT_COPY_FILES +=  \
 endif
 
 ## Boot animation
+ifeq ($(PRODUCT_IS_ATV),true)
 TARGET_SCREEN_HEIGHT := 1080
 TARGET_SCREEN_WIDTH := 1920
+endif
 
 ## Characteristics
 ifeq ($(PRODUCT_IS_ATV),true)
@@ -90,8 +92,10 @@ PRODUCT_PACKAGES += \
     fs_config_files
 
 ## Gatekeeper
+ifeq ($(TARGET_HAS_TEE),false)
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.software
+endif
 
 ## GMS
 ifeq ($(WITH_GMS),true)
@@ -113,6 +117,12 @@ ifneq ($(TARGET_KERNEL_VERSION),5.4)
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
+endif
+
+## Keymaster
+ifeq ($(TARGET_HAS_TEE),false)
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1-service
 endif
 
 ## Logo
@@ -174,6 +184,11 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.software.picture_in_picture.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.picture_in_picture.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml \
     frameworks/native/data/etc/android.software.voice_recognizers.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.voice_recognizers.xml
+
+ifneq ($(PRODUCT_IS_ATV),true)
+PRODUCT_COPY_FILES +=  \
+    frameworks/native/data/etc/android.software.secure_lock_screen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.secure_lock_screen.xml
+endif
 
 ## Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
