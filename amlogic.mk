@@ -86,7 +86,9 @@ PRODUCT_PACKAGES += \
     libz_stable.vendor
 
 ## fastbootd
-PRODUCT_PACKAGES += fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.1-impl.custom \
+    fastbootd
 
 ## File-system permissions
 PRODUCT_PACKAGES += \
@@ -94,10 +96,8 @@ PRODUCT_PACKAGES += \
     fs_config_files
 
 ## Gatekeeper
-ifeq ($(TARGET_HAS_TEE),false)
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.software
-endif
 
 ## Hardware Composer
 PRODUCT_PACKAGES += \
@@ -151,7 +151,6 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
 ## Permissions (Hardware)
 PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
-    frameworks/native/data/etc/android.hardware.gamepad.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.gamepad.xml \
     frameworks/native/data/etc/android.hardware.location.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.xml \
     frameworks/native/data/etc/android.hardware.screen.landscape.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.landscape.xml
 
