@@ -13,6 +13,9 @@ dalvik.vm.heaptargetutilization=0.75
 drm.service.enabled=1
 vendor.drm.service.enable=true
 
+## fastbootd
+ro.fastbootd.available=true
+
 ## Graphics
 persist.sys.hdmi.keep_awake=false
 persist.vendor.sys.cec.set_menu_language=false
@@ -30,10 +33,6 @@ ro.lmk.kill_heaviest_task=true
 ro.lmk.kill_timeout_ms=100
 ro.lmk.use_minfree_levels=true
 ro.lmk.use_new_strategy=true
-
-## Logging
-log.tag.stats_log=I
-ro.logd.size.stats=64K
 
 ## Media
 ro.media.maxmem=629145600
