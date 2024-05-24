@@ -6,6 +6,9 @@
 
 PLATFORM_PATH := device/amlogic/common
 
+## BUILD_BROKEN_*
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
 ## Android Verified Boot
 BOARD_AVB_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
@@ -112,6 +115,14 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 4896849920
 BOARD_USES_METADATA_PARTITION := true
 TARGET_USERIMAGES_USE_EXT4 := true
+
+ifneq ($(PRODUCT_IS_ATV),true)
+BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE ?= true
+endif
+
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS), true)
+include vendor/lmodroid/config/BoardConfigReservedSize.mk
+endif
 
 $(foreach p, $(call to-upper, $(ALL_PARTITIONS)), \
     $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := ext4) \
