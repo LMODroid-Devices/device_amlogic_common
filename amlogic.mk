@@ -74,6 +74,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml
 endif
 
+## Configstore
+PRODUCT_PACKAGES += \
+    disable_configstore
+
 ## DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
@@ -84,11 +88,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl.custom \
     fastbootd
-
-## File-system permissions
-PRODUCT_PACKAGES += \
-    fs_config_dirs \
-    fs_config_files
 
 ## Gatekeeper
 PRODUCT_PACKAGES += \
