@@ -13,11 +13,8 @@ endif
 
 ## Audio
 PRODUCT_COPY_FILES += \
-    frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
-    frameworks/av/services/audiopolicy/config/hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/hearing_aid_audio_policy_configuration.xml \
-    frameworks/av/services/audiopolicy/config/msd_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/msd_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/surround_sound_configuration_5_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/surround_sound_configuration_5_0.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
@@ -90,6 +87,10 @@ PRODUCT_PACKAGES += \
     libhwc2on1adapter \
     libhwc2onfbadapter
 
+## Health
+PRODUCT_PACKAGES += \
+    android.hardware.health-service.batteryless
+
 ## HDMI CEC
 ifeq ($(PRODUCT_IS_ATV),true)
 PRODUCT_PACKAGES += \
@@ -111,6 +112,12 @@ PRODUCT_PACKAGES += \
 endif
 
 ## Logo
+ifneq ($(PRODUCT_IS_ATV),true)
+LOGO_FILES := $(LOCAL_PATH)/logo/mobile
+else
+LOGO_FILES := $(LOCAL_PATH)/logo/tv
+endif
+
 PRODUCT_HOST_PACKAGES += \
     res_packer
 
