@@ -118,7 +118,7 @@ BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 370179008
 endif
 
 ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS), true)
-include vendor/lineage/config/BoardConfigReservedSize.mk
+include vendor/lmodroid/config/BoardConfigReservedSize.mk
 endif
 
 $(foreach p, $(call to-upper, $(ALL_PARTITIONS)), \
