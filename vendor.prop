@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
 ## Dalvik
 dalvik.vm.heapgrowthlimit=256m
 dalvik.vm.heapmaxfree=8m
@@ -8,9 +13,6 @@ dalvik.vm.heaptargetutilization=0.75
 
 ## DRM
 drm.service.enabled=1
-
-## fastbootd
-ro.fastbootd.available=true
 
 ## Graphics
 persist.sys.hdmi.keep_awake=false
@@ -32,9 +34,6 @@ ro.lmk.use_new_strategy=true
 ## Media
 ro.media.maxmem=629145600
 ro.vendor.platform.support.dolby=true
-
-## NRDP
-ro.vendor.nrdp.validation=ninja_7
 
 ## Platform
 ro.vendor.platform.is.tv=0

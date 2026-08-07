@@ -3,5 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-soong_namespace {
+runtime_resource_overlay {
+    name: "WifiOverlay",
 }

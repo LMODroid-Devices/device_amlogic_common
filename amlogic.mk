@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2022-2024 The LineageOS Project
-#
+# SPDX-FileCopyrightText: The LineageOS Project
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -25,7 +24,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.audio@4.0-impl \
     android.hardware.audio.effect@4.0-impl \
-    android.hardware.audio.service \
     audio.r_submix.default \
     audio.usb.default
 
@@ -35,8 +33,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     config.disable_bluetooth=true
 else
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth.audio@2.0-impl \
-    audio.bluetooth.default
+    audio.bluetooth.default \
+    android.hardware.bluetooth.audio-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.autoconnectbt.btclass=50c \
@@ -69,13 +67,10 @@ PRODUCT_PACKAGES += \
 
 ## DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm-service.clearkey \
-    libdrm.vendor \
-    libz_stable.vendor
+    android.hardware.drm-service.clearkey
 
 ## fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl.custom \
     fastbootd
 
 ## Gatekeeper
@@ -93,10 +88,6 @@ PRODUCT_PACKAGES += \
 
 ## HDMI CEC
 ifeq ($(PRODUCT_IS_ATV),true)
-PRODUCT_PACKAGES += \
-    android.hardware.tv.cec@1.0-impl \
-    android.hardware.tv.cec@1.0-service
-
 PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 endif
@@ -122,13 +113,16 @@ PRODUCT_HOST_PACKAGES += \
     res_packer
 
 ## Overlays
-DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lmodroid
+PRODUCT_PACKAGES += \
+    FrameworksOverlayAmlogic \
+    LineageSDKOverlayAmlogic
 
 ifneq ($(PRODUCT_IS_ATV),true)
-DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-tab
+PRODUCT_PACKAGES += \
+    FrameworksOverlayAmlogicTablet \
+    LineageSDKOverlayAmlogicTablet \
+    SettingsOverlayAmlogicTablet \
+    SystemUIOverlayAmlogicTablet
 endif
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
@@ -165,9 +159,6 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
 ## USB
-PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
-
 PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml
