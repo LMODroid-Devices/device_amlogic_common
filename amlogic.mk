@@ -92,9 +92,9 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 endif
 
-## Init-Files
-PRODUCT_COPY_FILES +=  \
-    $(LOCAL_PATH)/init-files/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
+## Init
+PRODUCT_PACKAGES += \
+    ueventd.amlogic.rc
 
 ## Keymaster
 ifeq ($(TARGET_HAS_TEE),false)
@@ -163,8 +163,12 @@ PRODUCT_COPY_FILES +=  \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml
 
-ifneq ($(BOARD_HAVE_WIFI),false)
+## VINTF
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(LOCAL_PATH)/vendor_framework_compatibility_matrix.xml
+DEVICE_MATRIX_FILE := $(LOCAL_PATH)/compatibility_matrix.xml
+
 ## Wi-Fi
+ifneq ($(BOARD_HAVE_WIFI),false)
 PRODUCT_PACKAGES += \
     hostapd \
     libwpa_client \
